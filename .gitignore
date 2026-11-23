@@ -1,0 +1,20 @@
+
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Kaggle datasets
+data/
+backend/data/
+
+# VS Code local settings
+.vscode/
