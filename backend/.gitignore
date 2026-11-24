@@ -1,0 +1,27 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Development backups
+*backup*.py
+*_before_*.py
+*_fixed.py
+
+# Temporary correction scripts
+fix_parser_security.py
+fix_quantity_tiers.py
+fix_remaining_security.py
+fix_tier_integration.py
+optimize_cache.py
+
+# Temporary audit files
+tier_audit.txt
+*.log
