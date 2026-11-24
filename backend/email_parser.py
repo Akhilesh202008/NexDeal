@@ -457,6 +457,10 @@ def extract_unit_divisor(
     ):
         return Decimal("12"), "dozen"
 
+    bulk = re.search('\\bper\\s+([1-9][0-9,]*)\\s+[a-zA-Z-]+\\b', context, re.I)
+    if bulk:
+        return Decimal(bulk.group(1).replace(',', '')), 'bulk'
+
     pack = re.search(
         r"\bper\s+pack\s+of\s+(\d+)\b",
         context,
@@ -679,7 +683,8 @@ def extract_discount(latest, full_message, quantity=None):
             list_discount.group(1)
         )
 
-        discount_threshold = 0
+        threshold_match = re.search(r'([0-9][0-9,]*) +or +more', latest, re.IGNORECASE)
+        discount_threshold = int(threshold_match.group(1).replace(',', '')) if threshold_match else 0
 
     elif previous_discount:
 

@@ -72,6 +72,7 @@ def detect_prompt_injection(text):
         # Extended security detection
         r"\b(?:cfo|ceo|management)\s+has\s+already\s+approved\b",
         r"\bai\s+(?:agent|assistant|bot)\s*[:,]\s*(?:please\s+)?(?:accept|approve|ignore|override)\b",
+        '\\bautomated\\s+system\\b[^.\\n]{0,150}\\brecord\\s+(?:the\\s+)?decision\\s+as\\s+approved\\b',
         r"\bautomated\s+approval\s+override\b",
         r"\bsystem\s+override\s*:\s*(?:approve|accept)\b",
 
@@ -176,6 +177,11 @@ def detect_banned_terms(text):
         )
 
     banned_patterns = [
+        '\\bacme(?:.s)?\\s+liability\\b[^.\\n]{0,80}\\b(?:shall|will|must)\\s+be\\s+unlimited\\b',
+        r'\bacme\s+(?:will|shall|must|agrees\s+to)\s+(?:buy|purchase)\b[^.\n]{0,80}\bonly\s+from\b',
+        r'\bacme(?:.s)?\s+liability\s+(?:shall|will|must)\s+be\s+unlimited\b',
+        r'\bhalf\s+(?:of\s+)?(?:the\s+)?order\s+value\s+upfront\b',
+
         r"\bauto[\s-]?renew(?:s|al|ed|ing)?\b",
         r"\bautomatic(?:ally)?\s+renew",
         r"\brenews?\s+on\s+its\s+own\b",
