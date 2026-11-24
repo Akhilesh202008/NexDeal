@@ -1,3 +1,4 @@
+import { workspaceStore } from "../workspaceStore";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Activity, ArrowUpRight, ArrowRight, CheckCircle2, RefreshCw, ShieldAlert, XCircle, GitCompareArrows, Layers3, Clock3 } from "lucide-react";
@@ -9,7 +10,7 @@ const TINTS = { ACCEPT: "#E2EFE9", COUNTER: "#FAE7E0", REJECT: "#ECE9E2", ESCALA
 
 function loadHistory() {
   try {
-    const data = JSON.parse(localStorage.getItem(KEY) || "[]");
+    const data = JSON.parse(workspaceStore.getItem(KEY) || "[]");
     return Array.isArray(data) ? data : [];
   } catch {
     return [];

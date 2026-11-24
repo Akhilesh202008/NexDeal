@@ -1,3 +1,4 @@
+import { workspaceStore } from "../workspaceStore";
 import { useEffect, useMemo, useState } from "react";
 import { History as HistoryIcon, Search, Copy, Check, FileText, X, RefreshCw } from "lucide-react";
 
@@ -7,7 +8,7 @@ const LABEL_PATTERN = /^(ACCEPT|COUNTER|REJECT|ESCALATE):([A-Z][A-Z0-9_]*):([0-9
 
 function readHistory() {
   try {
-    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const raw = JSON.parse(workspaceStore.getItem(STORAGE_KEY) || "[]");
     return Array.isArray(raw) ? raw : [];
   } catch {
     return [];

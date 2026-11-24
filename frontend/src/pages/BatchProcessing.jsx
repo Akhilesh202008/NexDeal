@@ -1,8 +1,9 @@
+import { workspaceStore } from "../workspaceStore";
 import Papa from "papaparse";
 import { useEffect, useMemo, useState } from "react";
 import { Upload, FileSpreadsheet, ArrowUpRight, Download, Search, ShieldCheck, LoaderCircle, AlertCircle, X } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? "http://127.0.0.1:8000" : "");
 const ACTIONS = ["ACCEPT", "COUNTER", "REJECT", "ESCALATE"];
 const LABEL_PATTERN = /^(ACCEPT|COUNTER|REJECT|ESCALATE):([A-Z][A-Z0-9_]*):([0-9]*)$/;
 
@@ -40,7 +41,7 @@ function parseResultsCsv(text) {
 
 function readSaved(key, fallback) {
   try {
-    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    return JSON.parse(workspaceStore.getItem(key)) ?? fallback;
   } catch {
     return fallback;
   }
@@ -54,7 +55,7 @@ function saveHistory(records) {
     )
   );
   records.forEach(item => history.set(item.thread_id, item));
-  localStorage.setItem(
+  workspaceStore.setItem(
     "nexdeal_history",
     JSON.stringify(Array.from(history.values()).reverse())
   );
@@ -76,8 +77,8 @@ export default function BatchProcessing() {
   }, [file]);
 
   useEffect(() => {
-    localStorage.setItem("nexdeal_batch_rows", JSON.stringify(rows));
-    localStorage.setItem("nexdeal_batch_csv", JSON.stringify(csv));
+    workspaceStore.setItem("nexdeal_batch_rows", JSON.stringify(rows));
+    workspaceStore.setItem("nexdeal_batch_csv", JSON.stringify(csv));
   }, [rows, csv]);
 
   const counts = useMemo(() => Object.fromEntries(ACTIONS.map((action) => [action, rows.filter((row) => row.action === action).length])), [rows]);
@@ -136,8 +137,8 @@ export default function BatchProcessing() {
       const resultText = await response.text();
       const parsed = parseResultsCsv(resultText);
       saveHistory(parsed);
-      localStorage.setItem("nexdeal_batch_rows", JSON.stringify(parsed));
-      localStorage.setItem("nexdeal_batch_csv", JSON.stringify(resultText));
+      workspaceStore.setItem("nexdeal_batch_rows", JSON.stringify(parsed));
+      workspaceStore.setItem("nexdeal_batch_csv", JSON.stringify(resultText));
       setCsv(resultText); setRows(parsed);
     } catch (err) {
       setError(err instanceof TypeError ? `Cannot reach NexDeal backend at ${API_URL}. Check the backend URL, /batch endpoint and CORS.` : err.message);
