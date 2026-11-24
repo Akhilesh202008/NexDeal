@@ -1,0 +1,365 @@
+/* ==========================================
+   NEXDEAL — DESIGN SYSTEM
+   Shared tokens, surfaces and micro-motion.
+   Layout/logic live in the page components.
+   ========================================== */
+
+:root {
+  --cream: #F6F3EB;
+  --cream-deep: #F1EDE3;
+  --panel: #EDE8DD;
+  --line: #E1DBCD;
+  --line-soft: #EDE8DD;
+  --ink: #1F1E1A;
+  --ink-soft: #3B392F;
+  --muted: #75716A;
+  --faint: #8C877D;
+  --accent: #C64F2B;
+  --lime: #D9F36A;
+
+  --shadow-card: 0 1px 2px rgba(31, 30, 26, 0.04), 0 24px 44px -34px rgba(31, 30, 26, 0.45);
+  --shadow-lift: 0 2px 6px rgba(31, 30, 26, 0.06), 0 30px 55px -32px rgba(31, 30, 26, 0.5);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+html,
+body,
+#root {
+  background-color: var(--cream);
+}
+
+/* ==========================================
+   SURFACES
+   ========================================== */
+
+.surface {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+.surface-hover {
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.surface-hover:hover {
+  transform: translateY(-3px);
+  border-color: #D2CBBB;
+  box-shadow: var(--shadow-lift);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid #DED8CB;
+  border-radius: 1.75rem;
+}
+
+.dark-panel {
+  position: relative;
+  overflow: hidden;
+  color: #F6F3EB;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.75rem;
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(217, 243, 106, 0.11), transparent 62%),
+    radial-gradient(90% 75% at 0% 100%, rgba(198, 79, 43, 0.18), transparent 58%),
+    #1F1E1A;
+  box-shadow: 0 2px 6px rgba(31, 30, 26, 0.08), 0 36px 60px -40px rgba(31, 30, 26, 0.85);
+}
+
+/* ==========================================
+   TYPE HELPERS
+   ========================================== */
+
+.eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.display {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.05em;
+  line-height: 1.02;
+}
+
+.display-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+}
+
+/* ==========================================
+   FORM FIELDS
+   ========================================== */
+
+.field {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid #D8D2C4;
+  background: #FCFBF7;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease),
+    background-color 0.2s var(--ease);
+}
+
+.field::placeholder {
+  color: #ABA69C;
+}
+
+.field:hover {
+  border-color: #CBC3B2;
+}
+
+.field:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(198, 79, 43, 0.13);
+}
+
+.field::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    transform 0.22s var(--ease),
+    background-color 0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    box-shadow 0.22s var(--ease),
+    color 0.22s var(--ease);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 0 10px 24px -16px rgba(31, 30, 26, 0.9);
+}
+
+.btn-ink:hover:not(:disabled) {
+  background: #35332B;
+  box-shadow: 0 16px 28px -16px rgba(31, 30, 26, 0.9);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 12px 26px -16px rgba(198, 79, 43, 0.95);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background: #B44626;
+  box-shadow: 0 18px 32px -16px rgba(198, 79, 43, 0.95);
+}
+
+.btn-lime {
+  background: var(--lime);
+  color: var(--ink);
+  box-shadow: 0 12px 26px -18px rgba(120, 150, 20, 0.9);
+}
+
+.btn-lime:hover:not(:disabled) {
+  background: #E2F985;
+}
+
+.btn-ghost {
+  background: #ffffff;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: #C9C1B0;
+  background: #FDFCF8;
+  box-shadow: 0 14px 26px -22px rgba(31, 30, 26, 0.8);
+}
+
+/* ==========================================
+   FEATURE CARD (lime)
+   ========================================== */
+
+#root .negotiation-feature-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--ink);
+  border: 1px solid #C6DF3F;
+  background: linear-gradient(135deg, #E9FB8F 0%, #DCF566 48%, #CDEC43 100%);
+  box-shadow: 0 20px 50px -34px rgba(120, 150, 20, 0.8);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+#root .negotiation-feature-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -90px;
+  top: -120px;
+  width: 340px;
+  height: 340px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 30, 26, 0.16);
+  box-shadow:
+    0 0 0 28px rgba(31, 30, 26, 0.045),
+    0 0 0 58px rgba(31, 30, 26, 0.03);
+  pointer-events: none;
+}
+
+#root .negotiation-feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 60px -34px rgba(120, 150, 20, 0.85);
+}
+
+#root .negotiation-feature-card h2,
+#root .negotiation-feature-card p {
+  color: var(--ink);
+}
+
+/* ==========================================
+   TABLES
+   ========================================== */
+
+.nd-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.nd-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.85rem 1rem;
+  background: #F5F1E7;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.nd-table tbody td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+
+.nd-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.nd-row {
+  transition: background-color 0.18s var(--ease);
+}
+
+.nd-row:hover {
+  background: #FBF8F0;
+}
+
+/* ==========================================
+   MOTION
+   ========================================== */
+
+@keyframes nd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nd-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+.rise {
+  animation: nd-rise 0.6s var(--ease) both;
+}
+
+.rise-1 { animation-delay: 0.04s; }
+.rise-2 { animation-delay: 0.09s; }
+.rise-3 { animation-delay: 0.14s; }
+.rise-4 { animation-delay: 0.19s; }
+.rise-5 { animation-delay: 0.24s; }
+
+.live-dot {
+  animation: nd-pulse 2.4s ease-in-out infinite;
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+#root button:focus-visible,
+#root a:focus-visible,
+#root input:focus-visible,
+#root select:focus-visible,
+#root textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root *,
+  #root *::before,
+  #root *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
