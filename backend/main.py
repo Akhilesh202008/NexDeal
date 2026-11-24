@@ -257,6 +257,11 @@ def analyze_thread(thread: NegotiationRequest):
 
 @app.get("/")
 def home():
+    index_file = BASE_DIR / "frontend" / "dist" / "index.html"
+
+    if index_file.is_file():
+        from fastapi.responses import FileResponse
+        return FileResponse(index_file)
 
     return {
         "project": "NexDeal AI",
@@ -502,3 +507,35 @@ def process_csv(
         "results": results,
         "review_queue": review_queue
     }
+
+
+# ==========================================
+# NEXDEAL - FRONTEND PRODUCTION HOSTING
+# ==========================================
+
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
+
+if (FRONTEND_DIST / "index.html").is_file():
+
+    app.mount(
+        "/assets",
+        StaticFiles(directory=FRONTEND_DIST / "assets"),
+        name="frontend-assets"
+    )
+
+    @app.get("/analyzer", include_in_schema=False)
+    @app.get("/history", include_in_schema=False)
+    @app.get("/batch", include_in_schema=False)
+    def frontend_page():
+        return FileResponse(FRONTEND_DIST / "index.html")
+
+    @app.get("/favicon.svg", include_in_schema=False)
+    def frontend_favicon():
+        return FileResponse(FRONTEND_DIST / "favicon.svg")
+
+    @app.get("/icons.svg", include_in_schema=False)
+    def frontend_icons():
+        return FileResponse(FRONTEND_DIST / "icons.svg")

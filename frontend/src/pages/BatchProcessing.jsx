@@ -2,7 +2,7 @@ import Papa from "papaparse";
 import { useMemo, useState } from "react";
 import { Upload, FileSpreadsheet, ArrowUpRight, Download, Search, ShieldCheck, LoaderCircle, AlertCircle, X } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = import.meta.env.PROD ? "" : (import.meta.env.VITE_API_URL || "http://localhost:8000");
 const ACTIONS = ["ACCEPT", "COUNTER", "REJECT", "ESCALATE"];
 const LABEL_PATTERN = /^(ACCEPT|COUNTER|REJECT|ESCALATE):([A-Z][A-Z0-9_]*):([0-9]*)$/;
 

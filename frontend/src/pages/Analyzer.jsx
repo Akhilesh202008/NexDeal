@@ -4,7 +4,7 @@ import {
   Sparkles, Copy, Check, LoaderCircle, AlertCircle, FileText,
 } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_URL = import.meta.env.PROD ? "" : (import.meta.env.VITE_API_URL || "http://localhost:8000");
 
 const emptyForm = { quantity: "1", round_number: "1", supplier_id: "", thread_date: "", category: "", email_thread: "" };
 

@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./Components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Analyzer from "./pages/Analyzer";
 import History from "./pages/History";
