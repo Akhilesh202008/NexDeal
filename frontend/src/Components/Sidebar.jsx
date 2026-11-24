@@ -1,6 +1,6 @@
 import {
   LayoutGrid,
-  ArrowLeftRight,
+  
   Clock3,
   Layers3,
   ArrowUpRight,
@@ -11,9 +11,8 @@ import { NavLink } from "react-router-dom";
 
 const menuItems = [
   { name: "Overview", path: "/", icon: LayoutGrid, number: "01" },
-  { name: "Negotiation Arena", path: "/analyzer", icon: ArrowLeftRight, number: "02" },
-  { name: "Deal Archive", path: "/history", icon: Clock3, number: "03" },
-  { name: "Batch Intelligence", path: "/batch", icon: Layers3, number: "04" },
+  { name: "Deal Archive", path: "/history", icon: Clock3, number: "02" },
+  { name: "Batch Intelligence", path: "/batch", icon: Layers3, number: "03" },
 ];
 
 function Sidebar() {
@@ -112,36 +111,7 @@ function Sidebar() {
         <div className="mt-auto hidden pt-10 lg:block">
 
           {/* Clickable Green Card */}
-          <NavLink
-            to="/analyzer"
-            className="group relative block overflow-hidden rounded-2xl border border-[#C6DF3F] bg-gradient-to-br from-[#E9FB8F] to-[#CFED47] p-5 text-[#1F1E1A] shadow-[0_18px_34px_-26px_rgba(120,150,20,0.9)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_40px_-24px_rgba(120,150,20,0.95)]"
-          >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-10 -top-12 h-32 w-32 rounded-full border border-[#1F1E1A]/15"
-            />
-
-            <div className="relative mb-5 flex items-center justify-between">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1F1E1A]/90 text-[#D9F36A]">
-                <Zap size={16} />
-              </span>
-
-              <ArrowUpRight
-                size={17}
-                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </div>
-
-            <h3 className="display relative text-[19px] font-bold leading-[1.15]">
-              Smarter deals.
-              <br />
-              Stronger outcomes.
-            </h3>
-
-            <p className="relative mt-2.5 text-[11px] leading-relaxed text-[#4E5626]">
-              Your AI-powered negotiation workspace.
-            </p>
-          </NavLink>
+          
 
           <div className="mt-6 flex items-center justify-between border-t border-[#E1DBCD] pt-4">
             <p className="text-[9px] font-bold tracking-[0.18em] text-[#ABA69C]">

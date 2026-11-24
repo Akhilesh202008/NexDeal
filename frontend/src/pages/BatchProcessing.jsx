@@ -1,3 +1,4 @@
+import Papa from "papaparse";
 import { useEffect, useMemo, useState } from "react";
 import { Upload, FileSpreadsheet, ArrowUpRight, Download, Search, ShieldCheck, LoaderCircle, AlertCircle, X } from "lucide-react";
 
@@ -99,13 +100,37 @@ export default function BatchProcessing() {
     if (!file || loading) return;
     setLoading(true); setError(""); setRows([]); setCsv("");
     try {
-      const data = new FormData();
-      data.append("file", file);
-      // Akhilesh must expose POST /batch and return a text/csv file with thread_id,label.
-      const response = await fetch(`${API_URL}/batch`, { method: "POST", body: data });
+      const input = Papa.parse(await file.text(), {
+        header: true,
+        skipEmptyLines: "greedy"
+      });
+
+      if (input.errors.length) {
+        throw new Error(input.errors[0].message);
+      }
+
+      const threads = input.data.map(row => ({
+        thread_id: row.thread_id,
+        supplier: row.supplier,
+        category: row.category,
+        date: row.date || null,
+        quantity: Number(row.quantity),
+        round_number: Number(row.round || 1),
+        email_text: row.supplier_message || "",
+        supplier_message: row.supplier_message || "",
+        extra: {
+          our_last_counter: row.our_last_counter || null
+        }
+      }));
+
+      const response = await fetch(`${API_URL}/export`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ threads })
+      });
       if (!response.ok) {
         let detail = `Backend returned HTTP ${response.status}`;
-        try { const body = await response.json(); if (typeof body.detail === "string") detail = body.detail; } catch { /* Non-JSON error */ }
+        try { const body = await response.json(); if (body.detail) detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail); } catch { /* Non-JSON error */ }
         throw new Error(detail);
       }
       const resultText = await response.text();

@@ -4,7 +4,6 @@ import { ArrowUpRight, Sparkles } from "lucide-react";
 
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
-import Analyzer from "./pages/Analyzer";
 import History from "./pages/History";
 import BatchProcessing from "./pages/BatchProcessing";
 
@@ -63,7 +62,6 @@ function App() {
         <main className="mx-auto w-full max-w-[1400px] flex-1">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/analyzer" element={<Analyzer />} />
             <Route path="/history" element={<History />} />
             <Route path="/batch" element={<BatchProcessing />} />
           </Routes>

@@ -159,9 +159,7 @@ function Dashboard() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2.5">
-            <Link to="/analyzer" className="btn btn-ink px-5 py-3 text-[13px]">
-              Open Negotiation Arena <ArrowUpRight size={16} />
-            </Link>
+            
 
             <Link
               to="/batch"
@@ -270,7 +268,7 @@ function Dashboard() {
             </span>
             <h3 className="mt-4 text-[15px] font-bold">{total ? "No matching decisions" : "No negotiations saved yet"}</h3>
             <p className="mt-1.5 max-w-sm text-[13px] leading-6 text-[#938E84]">
-              {total ? "Try another decision filter." : "Successful Analyzer and Batch results will appear here once connected to shared history."}
+              {total ? "Try another decision filter." : "Processed batch results will appear here automatically."}
             </p>
           </div>
         ) : (

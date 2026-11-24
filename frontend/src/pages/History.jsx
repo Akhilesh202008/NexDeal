@@ -136,7 +136,7 @@ function History() {
               <h3 className="mt-4 text-lg font-bold">{entries.length ? "No matching decisions" : "No saved negotiations yet"}</h3>
 
               <p className="mt-2 max-w-md text-[13px] leading-6 text-[#938E84]">
-                {entries.length ? "Try another search or decision filter." : "Processed results will appear here once they are saved by the Analyzer or Batch Intelligence pages."}
+                {entries.length ? "Try another search or decision filter." : "Processed results will appear here after batch processing."}
               </p>
             </div>
           ) : (
