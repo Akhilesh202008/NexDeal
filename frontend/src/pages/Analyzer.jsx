@@ -50,6 +50,28 @@ const ACTION_TONE = {
   ESCALATE: { fg: "#F6CE8C", bg: "rgba(246,191,107,0.14)", bd: "rgba(246,191,107,0.4)" },
 };
 
+function readSaved(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveHistory(records) {
+  const previous = readSaved("nexdeal_history", []);
+  const history = new Map(
+    (Array.isArray(previous) ? previous : []).map(
+      item => [item.thread_id, item]
+    )
+  );
+  records.forEach(item => history.set(item.thread_id, item));
+  localStorage.setItem(
+    "nexdeal_history",
+    JSON.stringify(Array.from(history.values()).reverse())
+  );
+}
+
 function Analyzer() {
   const [formData, setFormData] = useState(emptyForm);
   const [analysis, setAnalysis] = useState(null);
@@ -102,6 +124,16 @@ function Analyzer() {
       if (!match || (match[1] === "COUNTER" ? !/^[0-9]+$/.test(match[3]) : match[3] !== "")) {
         throw new Error("Backend returned an invalid ACTION:REASON:COUNTER_PRICE label.");
       }
+
+      saveHistory([{
+        ...formData,
+        thread_id: `MANUAL-${crypto.randomUUID()}`,
+        label,
+        action: match[1],
+        trace: payload.trace || [],
+        draft_email: payload.draft_email || "",
+        timestamp: new Date().toISOString()
+      }]);
 
       setAnalysis({
         label,

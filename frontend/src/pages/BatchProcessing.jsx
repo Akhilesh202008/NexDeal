@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Upload, FileSpreadsheet, ArrowUpRight, Download, Search, ShieldCheck, LoaderCircle, AlertCircle, X } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -37,14 +37,47 @@ function parseResultsCsv(text) {
   return rows;
 }
 
+function readSaved(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveHistory(records) {
+  const previous = readSaved("nexdeal_history", []);
+  const history = new Map(
+    (Array.isArray(previous) ? previous : []).map(
+      item => [item.thread_id, item]
+    )
+  );
+  records.forEach(item => history.set(item.thread_id, item));
+  localStorage.setItem(
+    "nexdeal_history",
+    JSON.stringify(Array.from(history.values()).reverse())
+  );
+}
+
+let retainedFile = null;
+
 export default function BatchProcessing() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(retainedFile);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [rows, setRows] = useState([]);
-  const [csv, setCsv] = useState("");
+  const [rows, setRows] = useState(() => readSaved("nexdeal_batch_rows", []));
+  const [csv, setCsv] = useState(() => readSaved("nexdeal_batch_csv", ""));
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("ALL");
+
+  useEffect(() => {
+    retainedFile = file;
+  }, [file]);
+
+  useEffect(() => {
+    localStorage.setItem("nexdeal_batch_rows", JSON.stringify(rows));
+    localStorage.setItem("nexdeal_batch_csv", JSON.stringify(csv));
+  }, [rows, csv]);
 
   const counts = useMemo(() => Object.fromEntries(ACTIONS.map((action) => [action, rows.filter((row) => row.action === action).length])), [rows]);
   const filtered = useMemo(() => rows.filter((row) => (filter === "ALL" || row.action === filter) && `${row.thread_id} ${row.label}`.toLowerCase().includes(search.toLowerCase())), [rows, filter, search]);
@@ -77,6 +110,9 @@ export default function BatchProcessing() {
       }
       const resultText = await response.text();
       const parsed = parseResultsCsv(resultText);
+      saveHistory(parsed);
+      localStorage.setItem("nexdeal_batch_rows", JSON.stringify(parsed));
+      localStorage.setItem("nexdeal_batch_csv", JSON.stringify(resultText));
       setCsv(resultText); setRows(parsed);
     } catch (err) {
       setError(err instanceof TypeError ? `Cannot reach NexDeal backend at ${API_URL}. Check the backend URL, /batch endpoint and CORS.` : err.message);
