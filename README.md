@@ -80,6 +80,14 @@ flowchart TD
     I --> UI
     K[Sample answer CSV] --> M[Exact-match evaluator]
     I --> M
+
+    subgraph LLM[Optional LLM Service]
+        LLM_G[Google Gemini 2.5 Flash] --> LLM_E[Structured Email Extraction]
+    end
+
+    style LLM_G fill:#4285F4,color:#fff
+    style LLM_E fill:#DBEAFE,color:#1E3A8A
+
 ```
 
 The optional Gemini experiment is not part of this execution path.
